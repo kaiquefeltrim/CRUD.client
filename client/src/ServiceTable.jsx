@@ -32,7 +32,7 @@ export const ServiceTable = () => {
         <div className=" flex  justify-center min-h-screen  bg-gray-700 ">
             <div className="relative   overflow-x-auto shadow-md sm:rounded-lg flex flex-col w-full items-center bg-gray-600">
                 <div >
-                    <button data-modal-target="ModalService" data-modal-toggle="" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button"onClick={openModal}>Open Modal</button>
+                    <button data-modal-target="ModalService" data-modal-toggle="ModalService" className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" onClick={openModal} >Open Modal</button>
                     {modalIsOpen ? <ModalService/> : null }
                 </div>
 
@@ -59,7 +59,7 @@ export const ServiceTable = () => {
                     <tbody>
                         {
                             servtable.map(servtable =>
-                                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700" key={servtable.client_id}>
+                                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700" key={servtable.service_id}>
                                     <td className="px-6 py-4" >{servtable.serv_name}</td>
                                     <td className="px-6 py-4">{servtable.serv_money}</td>
                                     <td className="px-6 py-4">{servtable.cost}</td>
