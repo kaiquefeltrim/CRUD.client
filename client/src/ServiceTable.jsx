@@ -21,8 +21,8 @@ export const ServiceTable = () => {
             .then(res => setServiceTable(res.data))
             .catch(err => console.log(err))
     }, [])
-    const handleDelete = (service_id) => {
-        axios.delete("http://localhost:3030/delete/" )
+    const handleDeleteService = (id) => {
+        axios.delete("http://localhost:3030/deleteservice/" + id )
             .then(res => window.location.reload())
             .catch(err => console.log(err))
 
@@ -37,7 +37,7 @@ export const ServiceTable = () => {
                 </div>
 
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-700">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-500 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-3">
                                 Name
@@ -65,8 +65,8 @@ export const ServiceTable = () => {
                                     <td className="px-6 py-4">{servtable.cost}</td>
                                     <td className="px-6 py-4">{servtable.finish_date}</td>
                                     <td className="flex  my-auto ">
-                                        <button type='button' id='edit' className='me-2 bg-blue-700 hover:bg-blue-800 text-white  mb-4 mt-4 font-medium  py-2 px-4 mb-4 rounded-full shadow-md'><a href={`/update/${servtable.client_id}`}>Edit</a></button>
-                                        <button type='button' onClick={() => handleDelete(servtable.service_id)} className=' bg-blue-700 hover:bg-blue-800 text-white  mb-4 mt-4 font-medium py-2 px-4  mb-4 rounded-full shadow-md  '>Excluir</button>
+                                        <button type='button' id='edit' className='me-2 bg-blue-700 hover:bg-blue-800 text-white  mb-4 mt-4 font-medium  py-2 px-4 mb-4 rounded-full shadow-md'><a href={`/update/${servtable.service_id}`}>Edit</a></button>
+                                        <button type='button' onClick={() => handleDeleteService(servtable.service_id)} className=' bg-blue-700 hover:bg-blue-800 text-white  mb-4 mt-4 font-medium py-2 px-4  mb-4 rounded-full shadow-md  '>Excluir</button>
                                     </td>
                                 </tr>)
                         }

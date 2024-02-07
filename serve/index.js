@@ -104,6 +104,17 @@ app.delete('/delete/:id', (req, res) => {
     })
 })
 
+app.delete('/deleteservice/:id', (req, res) => {
+    const sql = "DELETE FROM service where service_id = ?";
+    const id = req.params.id;
+    db.query(sql,[id], (err, data) => {
+        if(err) {
+            return res.json({Error: JSON.stringify(err)})
+        }
+        return res.json(data)
+    })
+})
+
 app.get('/getrecord/:id', (req,res) => { 
     const id = req.params.id;
     const sql = "SELECT * FROM new_clients where id = ?"
