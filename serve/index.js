@@ -16,6 +16,7 @@ const db = mysql.createConnection({
     dateStrings: 'date'
 })
 
+
 app.get('/', (req, res) => {
     const sql = "SELECT * FROM new_clients;";
     db.query(sql, (err, data) => {
@@ -25,37 +26,6 @@ app.get('/', (req, res) => {
         return res.json(data)
     })
 })
-
-app.get('/service/:id', (req, res) => {
-    const client_id = req.params.id;
-    const sql = "SELECT * FROM service where client_id = ?";
-    db.query(sql,[client_id], (err, data) => {
-        if(err) {
-            return res.json({Error: JSON.stringify(err)})
-        }
-        return res.json(data)
-    })
-})
-app.post('/service/:id', (req, res) => {
-    const client_id = req.params.id;
-    const sql = "INSERT INTO service (client_id, service_id, serv_name, serv_money, cost, finish_date) VALUES (?)";
-    const values = [
-        client_id,
-        req.body.service_id,
-        req.body.serv_name,
-        req.body.serv_money,
-        req.body.cost,
-        req.body.finish_date
-    ]
-    db.query(sql,[values], (err, data) => {
-        if(err) {
-            return res.json({Error: JSON.stringify(err)})
-        }
-        return res.json(data)
-    })
-})
-
-
 
 app.post('/create', (req, res) => {
     const sql = "INSERT INTO new_clients (id, name, email, phone, date) VALUES (?)";
@@ -78,14 +48,25 @@ app.put('/update/:id', (req, res) => {
     const sql = "UPDATE new_clients SET name = ?, email = ?, phone = ?, date = ? where id = ?";
 
     const values = [
-        
         req.body.name,
         req.body.email,
         req.body.phone,
         req.body.date
     ]
+
     const id = req.params.id;
     db.query(sql,[...values, id], (err, data) => {
+        if(err) {
+            return res.json({Error: JSON.stringify(err)})
+        }
+        return res.json(data)
+    })
+})
+
+app.get('/getrecord/:id', (req,res) => { 
+    const id = req.params.id;
+    const sql = "SELECT * FROM new_clients where id = ?"
+    db.query(sql,[id], (err, data) => {
         if(err) {
             return res.json({Error: JSON.stringify(err)})
         }
@@ -104,8 +85,59 @@ app.delete('/delete/:id', (req, res) => {
     })
 })
 
-app.delete('/deleteservice/:id', (req, res) => {
-    const sql = "DELETE FROM service where service_id = ?";
+// <--------------------------------------------------------------------------------------CRUD Serviços--------------------------------------------------------------------------------->
+
+app.get('/service/:id', (req, res) => {
+    const client_id = req.params.id;
+    const sql = "SELECT * FROM service where client_id = ?";
+    db.query(sql,[client_id], (err, data) => {
+        if(err) {
+            return res.json({Error: JSON.stringify(err)})
+        }
+        return res.json(data)
+    })
+})
+
+app.post('/service/:id', (req, res) => {
+    const client_id = req.params.id;
+    const sql = "INSERT INTO service (client_id, service_id, serv_name, serv_money, cost, finish_date) VALUES (?)";
+    const values = [
+        client_id,
+        req.body.service_id,
+        req.body.serv_name,
+        req.body.serv_money,
+        req.body.cost,
+        req.body.finish_date
+    ]
+    db.query(sql,[values], (err, data) => {
+        if(err) {
+            return res.json({Error: JSON.stringify(err)})
+        }
+        return res.json(data)
+    })
+})
+
+app.put('/service/:id', (req, res) => {
+    const sql = "UPDATE service SET serv_name = ?, serv_money = ?, cost = ?, finish_date = ? where service_id = ?";
+
+    const values = [
+        
+        req.body.serv_name,
+        req.body.serv_money,
+        req.body.cost,
+        req.body.finish_date
+    ]
+    const id = req.params.id;
+    db.query(sql,[...values, id], (err, data) => {
+        if(err) {
+            return res.json({Error: JSON.stringify(err)})
+        }
+        return res.json(data)
+    })
+})
+
+app.get('/getrecordserv/:id', (req,res) => { 
+    const sql = "SELECT * FROM service where service_id = ?"
     const id = req.params.id;
     db.query(sql,[id], (err, data) => {
         if(err) {
@@ -115,9 +147,10 @@ app.delete('/deleteservice/:id', (req, res) => {
     })
 })
 
-app.get('/getrecord/:id', (req,res) => { 
+
+app.delete('/deleteservice/:id', (req, res) => {
+    const sql = "DELETE FROM service where service_id = ?";
     const id = req.params.id;
-    const sql = "SELECT * FROM new_clients where id = ?"
     db.query(sql,[id], (err, data) => {
         if(err) {
             return res.json({Error: JSON.stringify(err)})
