@@ -10,15 +10,21 @@ export const ServiceTable = () => {
     const [selectedServiceId, setSelectedServiceId] = useState(null);
 
     const [modalIsOpen, setIsOpen] = useState(false);
-    function openModal() {
+    const openModal = () => {
         setIsOpen(true);
-    }
+    };
+    const closeModal = () => {
+        setIsOpen(false);
+    };
 
     const [modalServIsOpen, setIsOpenModal] = useState(false);
-    function openModalServ(serviceId) {
+    const openModalServ = (serviceId) => {
         setSelectedServiceId(serviceId)
         setIsOpenModal(true);
 
+    };
+    const closeModalServ = () =>{
+        setIsOpenModal(false)
     }
 
     const { id } = useParams()
@@ -37,11 +43,11 @@ export const ServiceTable = () => {
     }
     return (
         <div className=" flex  justify-center min-h-screen  bg-gray-700 ">
-            {modalServIsOpen ? <UpdateService idServ={selectedServiceId}/> : null}
+            {modalServIsOpen ? <UpdateService isOpenServ={modalServIsOpen} onCloseServ={closeModalServ} idServ={selectedServiceId}/> : null}
             <div className="relative   overflow-x-auto shadow-md sm:rounded-lg flex flex-col w-full items-center bg-gray-600">
                 <div >
                     <button data-modal-target="ModalService" data-modal-toggle="ModalService" className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" onClick={openModal} >Open Modal</button>
-                    {modalIsOpen ? <ModalService/> : null}
+                    {modalIsOpen ? <ModalService isOpen={modalIsOpen} onClose={closeModal}/> : null}
                 </div>
 
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-700">
